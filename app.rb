@@ -10,6 +10,7 @@ end
 
 get "/" do
   content_type :json
+  response['Access-Control-Allow-Origin'] = '*'
   @events = Event.order("created_at DESC")
   @events.to_json
 end
