@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <el-card class="box-card">
+    <el-card class="box-card" :class="status">
     <div slot="header" class="clearfix">
       <h2>{{name}}</h2>
       <!-- <el-button style="float: right;" type="primary">Operation button</el-button> -->
@@ -36,7 +36,14 @@ export default {
   }
 
   .box-card {
-    /*width: 480px;*/
     margin-bottom: 10px;
+  }
+
+  .standing {
+    border-color: #20A0FF;
+  }
+
+  .sitting {
+    border-color: #F7BA2A;
   }
 </style>
