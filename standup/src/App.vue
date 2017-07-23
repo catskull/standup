@@ -1,35 +1,45 @@
 <template>
   <div id="app">
-    <el-row :gutter="20">
-      <el-col :md="6" :sm="24"><card></card></el-col>
-      <el-col :md="6" :sm="24"><card></card></el-col>
-      <el-col :md="6" :sm="24"><card></card></el-col>
-      <el-col :md="6" :sm="24"><card></card></el-col>
-    </el-row>
+    <span v-if="events">
+      <el-row v-for="chunk in events" :key="chunk[0].id" :gutter="20">
+        <el-col v-for="event in chunk" :key="event.id" :md="6" :sm="24">
+          <card :name="event.owner" :status="event.status"></card>
+        </el-col>
+      </el-row>
+    </span>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import _ from 'lodash'
 import card from './components/card'
 
 export default {
   name: 'app',
-  components: {
-    card
+
+  data () {
+    return {
+      events: null
+    }
   },
 
   created () {
-    console.log('hi')
-    axios.get('http://peaceful-refuge-56771.herokuapp.com/')
+    axios.get('https://peaceful-refuge-56771.herokuapp.com/')
     .then(
       response => {
         console.log(response)
+        this.events = _.chunk(response.data, 4)
       },
 
       error => {
         console.log(error)
-      })
+      }
+    )
+  },
+
+  components: {
+    card
   }
 }
 </script>
