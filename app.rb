@@ -11,7 +11,7 @@ end
 get "/" do
   content_type :json
   response['Access-Control-Allow-Origin'] = '*'
-  @events = Event.group(:owner)
+  @events = Event.all.group(:owner)
   @events.to_json
 end
 
