@@ -3,7 +3,11 @@
     <span v-if="events">
       <el-row v-for="chunk in events" :key="chunk[0].id" :gutter="20">
         <el-col v-for="event in chunk" :key="event.id" :md="6" :sm="24">
-          <card :name="event.owner" :status="event.status"></card>
+          <card
+            :name="event.owner"
+            :status="event.status"
+            :timestamp="event.created_at"
+          ></card>
         </el-col>
       </el-row>
     </span>

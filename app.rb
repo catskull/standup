@@ -5,7 +5,12 @@ require 'sinatra/activerecord'
 require './environments'
 require 'json'
 
+class User < ActiveRecord::Base
+  has_many :events, dependent: :destroy
+end
+
 class Event < ActiveRecord::Base
+  belongs_to :user
 end
 
 get "/" do

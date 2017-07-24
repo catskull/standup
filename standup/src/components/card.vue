@@ -3,27 +3,32 @@
     <el-card class="box-card" :class="status">
     <div slot="header" class="clearfix">
       <h2>{{name}}</h2>
-      <!-- <el-button style="float: right;" type="primary">Operation button</el-button> -->
+      <p class="status">is {{status}}</p>
+      <p class="status updated">{{timeAgo}}</p>
     </div>
-    <p>{{name}} is {{status}}</p>
   </el-card>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'card',
 
-  props: ['name', 'status'],
+  props: ['name', 'status', 'timestamp'],
 
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      timeAgo: ''
     }
   },
 
   created () {
-    console.log(this.name)
+    this.timeAgo = moment(this.timestamp).fromNow()
+    if (this.timeAgo === 'a few seconds ago') {
+      this.timeAgo = 'just now'
+    }
   }
 }
 </script>
@@ -45,5 +50,17 @@ export default {
 
   .sitting {
     border-color: #F7BA2A;
+  }
+
+  .status {
+    margin: 0;
+    color: #8492A6;
+    display: inline;
+  }
+
+  .updated {
+    float: right;
+    margin-top: 16px;
+    font-size: 13px;
   }
 </style>
