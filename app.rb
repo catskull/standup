@@ -11,14 +11,23 @@ end
 
 class Event < ActiveRecord::Base
   belongs_to :user
+
+  before_save :set_owner
+
+  private
+  def set_owner
+    self.owner = self.user.name
+  end
 end
 
 get "/" do
   content_type :json
   response['Access-Control-Allow-Origin'] = '*'
-  # @events = Event.group(:owner).order("created_at DESC")
-  @events = Event.select("id, owner, created_at, status, standing").group("owner")
-  @events.to_json
+  events = []
+  User.all.each do |u|
+    events.push(u.events.last)
+  end
+  events.to_json
 end
 
 post "/" do
