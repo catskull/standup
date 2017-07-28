@@ -67,16 +67,20 @@ end
 
 get "/users" do
   response['Access-Control-Allow-Origin'] = '*'
-  hash = {}
+  users = []
   User.all.each do |u|
-    hash[u.name] = u.last_five_days_totals
+    hash = {}
+    hash["totals"] = u.last_five_days_totals
+    hash["name"] = u.name
+    hash["id"] = u.id
     if u.events.any?
-      hash[u.name]["standing"] = u.events.last.ended_at.nil?
+      hash["standing"] = u.events.last.ended_at.nil?
     else
-      hash[u.name]["standing"] = nil
+      hash["standing"] = nil
     end
+    users.push(hash)
   end
-  hash.to_json
+  users.to_json
 end
 
 post "/users/create" do
