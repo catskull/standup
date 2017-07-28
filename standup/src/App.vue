@@ -29,7 +29,7 @@ export default {
   },
 
   created () {
-    axios.get('https://peaceful-refuge-56771.herokuapp.com/events')
+    axios.get('https://peaceful-refuge-56771.herokuapp.com/users')
     .then(
       response => {
         console.log(response)

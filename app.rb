@@ -66,6 +66,7 @@ post "/events/create" do
 end
 
 get "/users" do
+  response['Access-Control-Allow-Origin'] = '*'
   hash = {}
   User.all.each do |u|
     hash[u.name] = u.last_five_days_totals
