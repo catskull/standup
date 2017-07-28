@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <span v-if="events">
-      <el-row v-for="chunk in events" :key="chunk[0].id" :gutter="20">
-        <el-col v-for="event in chunk" :key="event.id" :md="8" :sm="24">
+    <span v-if="users">
+      <el-row v-for="chunk in users" :key="chunk[0].id" :gutter="20">
+        <el-col v-for="user in chunk" :key="user.id" :md="8" :sm="24">
           <card
-            :name="event.owner"
-            :status="event.status"
-            :timestamp="event.created_at"
+            :name="user.name"
+            :standing="user.standing"
+            :timestamp="user.timestamp"
+            :events="user.totals"
           ></card>
         </el-col>
       </el-row>
@@ -24,7 +25,7 @@ export default {
 
   data () {
     return {
-      events: null
+      users: null
     }
   },
 
@@ -33,7 +34,7 @@ export default {
     .then(
       response => {
         console.log(response)
-        this.events = _.chunk(response.data, 3)
+        this.users = _.chunk(response.data, 3)
       },
 
       error => {
