@@ -70,6 +70,11 @@ get "/users" do
   hash = {}
   User.all.each do |u|
     hash[u.name] = u.last_five_days_totals
+    if u.events.any?
+      hash[u.name]["standing"] = u.events.last.ended_at.nil?
+    else
+      hash[u.name]["standing"] = nil
+    end
   end
   hash.to_json
 end
