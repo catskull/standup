@@ -75,8 +75,10 @@ get "/users" do
     hash["id"] = u.id
     if u.events.any?
       hash["standing"] = u.events.last.ended_at.nil?
+      hash["timestamp"] = u.events.last.updated_at
     else
       hash["standing"] = nil
+      hash["timestamp"] = nil
     end
     users.push(hash)
   end
