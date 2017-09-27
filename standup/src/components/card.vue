@@ -10,6 +10,7 @@
       :labels="labels"
       :data="data"
       :height="200"
+      :max="max"
     ></chart>
   </el-card>
   </div>
@@ -23,7 +24,7 @@ import chart from './chart'
 export default {
   name: 'card',
 
-  props: ['name', 'standing', 'timestamp', 'events'],
+  props: ['name', 'standing', 'timestamp', 'events', 'max'],
 
   data () {
     return {

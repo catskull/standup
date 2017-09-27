@@ -1,7 +1,7 @@
 import { Bar } from 'vue-chartjs'
 
 export default Bar.extend({
-  props: ['labels', 'data'],
+  props: ['labels', 'data', 'max'],
   mounted () {
     // Overwriting base render method with actual data.
     this.renderChart({
@@ -15,13 +15,19 @@ export default Bar.extend({
       ]
     },
       {
+        scales: {
+          yAxes: [{
+            ticks: {
+              stepSize: 10,
+              max: this.max
+            }
+          }]
+        },
         legend: {
           display: false
         },
-        scales: {
-          xAxis: [{
-            barPercentage: 1
-          }]
+        animation: {
+          duration: 0
         }
       }
   )

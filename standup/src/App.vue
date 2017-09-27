@@ -8,6 +8,7 @@
             :standing="user.standing"
             :timestamp="user.timestamp"
             :events="user.totals"
+            :max="max"
           ></card>
         </el-col>
       </el-row>
@@ -25,15 +26,21 @@ export default {
 
   data () {
     return {
-      users: null
+      users: null,
+      max: 0
     }
   },
 
   created () {
-    axios.get('https://peaceful-refuge-56771.herokuapp.com/users')
+    axios.get('http://localhost:4567/users')
     .then(
       response => {
-        console.log(response)
+        let times = []
+        _.forEach(response.data, (person) => {
+          times.push(Object.values(person.totals))
+        })
+        times = _.flattenDeep(times)
+        this.max = Math.round(_.max(times) / 60)
         this.users = _.chunk(response.data, 3)
       },
 
